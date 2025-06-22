@@ -1,0 +1,44 @@
+# Payment API Dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+# Create non-root user
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Copy csproj and restore dependencies
+COPY ["PaymentSystem.PaymentApi.csproj", "."]
+RUN dotnet restore "PaymentSystem.PaymentApi.csproj"
+
+# Copy source code
+COPY . .
+RUN dotnet build "PaymentSystem.PaymentApi.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "PaymentSystem.PaymentApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+
+# Copy published application
+COPY --from=publish /app/publish .
+
+# Create directories and set permissions
+RUN mkdir -p /app/keys /app/logs && \
+chown -R appuser:appuser /app && \
+chmod 755 /app && \
+chmod 700 /app/keys && \
+chmod 755 /app/logs
+
+# Switch to non-root user
+USER appuser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+CMD curl -f https://localhost:443/api/payment/health || exit 1
+
+ENTRYPOINT ["dotnet", "PaymentSystem.PaymentApi.dll"]
