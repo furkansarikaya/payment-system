@@ -17,9 +17,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Shared\Extensions\" />
-      <Folder Include="Shared\Middleware\" />
-    </ItemGroup>
-
 </Project>
