@@ -625,7 +625,7 @@ If you find this library useful, please consider giving it a star on GitHub! It 
 If you encounter any issues or have questions:
 
 1. Check the [troubleshooting section](#troubleshooting)
-2. Search existing [GitHub issues](https://github.com/furkansarikaya/FS.EntityFramework.Library/issues)
+2. Search existing [GitHub issues](https://github.com/furkansarikaya/payment-system/issues)
 3. Create a new issue with detailed information
 4. Join our community discussions
 
