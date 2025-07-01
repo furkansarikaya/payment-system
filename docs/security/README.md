@@ -12,6 +12,7 @@ Security is the top priority in the Payment System design. This section covers a
 - [Compliance](compliance.md)
 - [Security Testing](testing.md)
 - [Incident Response](incident-response.md)
+- [mTLS Authentication](mtls-authentication.md)
 
 ## Security Principles
 
