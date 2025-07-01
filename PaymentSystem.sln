@@ -7,6 +7,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentSystem.ClientApi", "src\PaymentSystem.ClientApi\PaymentSystem.ClientApi.csproj", "{09230498-8CEC-41B8-BDEB-4D646AC9FA14}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{96B880A6-1C13-4025-B17B-C682E05D2035}"
+	ProjectSection(SolutionItems) = preProject
+		tools\scripts\generate-client-certificates.sh = tools\scripts\generate-client-certificates.sh
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentSystem.KeyManager", "tools\PaymentSystem.KeyManager\PaymentSystem.KeyManager.csproj", "{3A4DFDBA-E0FD-4D63-BCBB-2EB8BC96C570}"
 EndProject

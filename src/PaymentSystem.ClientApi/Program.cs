@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.RateLimiting;
 using PaymentSystem.ClientApi.Features.Customer.Services;
 using PaymentSystem.ClientApi.Features.PaymentClient.Services;
+using PaymentSystem.ClientApi.Features.Security.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,26 @@ builder.Services.AddCors(options =>
 // HttpClient konfigürasyonu - Payment API ile iletişim için
 // Bu çok önemli: HttpClient factory pattern kullanarak connection pooling optimizasyonu
 builder.Services.AddHttpClient<IPaymentClientService, PaymentClientService>((serviceProvider, client) =>
+    {
+        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        var baseUrl = configuration["PaymentApi:BaseUrl"] ?? "https://localhost:7000";
+
+        client.BaseAddress = new Uri(baseUrl);
+        client.DefaultRequestHeaders.Add("User-Agent", "PaymentSystem-ClientApi/1.0");
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+        // Timeout ayarları - network latency için
+        client.Timeout = TimeSpan.FromSeconds(30);
+    })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+    {
+        // SSL sertifika validasyonu - Production'da true olmalı
+        ServerCertificateCustomValidationCallback = builder.Environment.IsDevelopment()
+            ? HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            : null
+    });
+
+builder.Services.AddHttpClient<IClientSecurityService, ClientSecurityService>((serviceProvider, client) =>
     {
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
         var baseUrl = configuration["PaymentApi:BaseUrl"] ?? "https://localhost:7000";
