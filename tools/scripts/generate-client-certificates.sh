@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Client Certificate Generation Script for Payment System

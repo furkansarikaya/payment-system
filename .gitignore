@@ -410,6 +410,55 @@ FodyWeavers.xsd
 **/*keys*.json
 **/*key*.json
 
+# ==================================
+# TLS CLIENT CERTIFICATE SECURITY
+# ==================================
+
+# Certificate Authority files
+**/ca/
+**/certificate-authority/
+**/*ca*.pem
+**/*ca*.crt
+**/*ca*.key
+
+# Client certificates (all formats)
+**/client-certs/
+**/client-certificates/
+**/certificates/
+**/*client*.pem
+**/*client*.crt
+**/*client*.key
+**/*client*.p12
+**/*client*.pfx
+
+# Certificate signing requests
+**/*.csr
+
+# Certificate bundles and chains
+**/*bundle*.pem
+**/*chain*.pem
+**/*fullchain*.pem
+
+# Certificate configuration files that might contain sensitive data
+**/openssl.cnf
+**/cert-config.conf
+
+# Certificate generation artifacts
+**/certificate-generation/
+**/cert-gen/
+**/serial
+**/index.txt*
+**/.srl
+
+# Backup certificate files
+**/*.pem.backup*
+**/*.key.backup*
+**/*.p12.backup*
+
+# Certificate passwords and configuration
+**/cert-passwords.txt
+**/certificate-config.json
+
 # Backups
 **/backups/
 **/*.backup
